@@ -82,8 +82,8 @@ private:
         }
     };
     friend void Merge(block & temp);
-    std::list<block> alloc_memory;
-    std::vector<std::pair<int * , int *>> ptr;
+    std::list<block> alloc_memory;               //创建的内存
+    std::vector<std::pair<int * , int *>> ptr;   //分配出去的地址
 
     // Add whatever you want to add
 };
@@ -102,7 +102,7 @@ inline Allocator::Allocator() {
     ptr.clear();
 }
 
-inline void Merge(Allocator::block & temp) {
+inline void Merge(Allocator::block & temp) {     //对释放的块中内存进行合并，以实现利用率提高
     temp.free_space_.sort([](const std::pair<int*, int>& a, const std::pair<int*, int>& b) { return a.first < b.first; });
     auto it = temp.free_space_.begin();
     auto next = it;
